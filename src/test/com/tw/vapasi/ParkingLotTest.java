@@ -29,9 +29,7 @@ public class ParkingLotTest {
             parkingLot.unpark(vehicle);
             Assertions.fail("Can not unpark vehicle");
         } catch (CannotUnParkException ex) {
-
         }
-
     }
 
     @Test
