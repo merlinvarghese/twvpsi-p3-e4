@@ -8,10 +8,16 @@ public class ParkingLot {
 
     List<Vehicle> vehicles;
     Integer numberOfSlots;
+    Owner owner;
 
     ParkingLot(Integer numberOfSlots) {
         this.numberOfSlots = numberOfSlots;
         vehicles = new ArrayList<>(numberOfSlots);
+    }
+    ParkingLot(Integer numberOfSlots, Owner owner) {
+        this.numberOfSlots = numberOfSlots;
+        vehicles = new ArrayList<>(numberOfSlots);
+        this.owner = owner;
     }
 
     public void park(Vehicle vehicle) throws ParkFullException {
@@ -19,6 +25,9 @@ public class ParkingLot {
             throw new ParkFullException();
         }
         vehicles.add(vehicle);
+        if (isSlotNotAvailable()) {
+            owner.notifyParkingFull();
+        }
     }
 
     public void unpark(Vehicle vehicle) throws CannotUnParkException {
@@ -26,6 +35,13 @@ public class ParkingLot {
             throw new CannotUnParkException();
         }
         vehicles.remove(vehicle);
+        notifyOwnerParkingAvailable();
+    }
+
+    private void notifyOwnerParkingAvailable() {
+        if (isParkingBecomeAvailable() && isOwnerPresent() ) {
+            owner.notifyParkingAvailable();
+        }
     }
 
     public boolean isSlotNotAvailable() {
@@ -34,6 +50,14 @@ public class ParkingLot {
 
     public boolean isVehicleUnParked(Vehicle vehicle) {
         return !vehicles.contains(vehicle);
+    }
+
+    public boolean isParkingBecomeAvailable() {
+        return vehicles.size() == numberOfSlots-1;
+    }
+
+    public boolean isOwnerPresent() {
+        return owner!=null;
     }
 
     public boolean isVehicleParked(Vehicle vehicle) {
