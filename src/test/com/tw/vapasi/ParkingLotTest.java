@@ -3,7 +3,6 @@ package com.tw.vapasi;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -100,5 +99,14 @@ public class ParkingLotTest {
 
         verify(owner,never()).notifyParkingAvailable();
     }
+    @Test
+    void expectCarParkedByValet() throws ParkFullException, CannotUnParkException {
+        Owner owner = mock(Owner.class);
+        ParkingLot parkingLot = new ParkingLot(3, owner);
+        Vehicle vehicle = new Vehicle();
+        parkingLot.park(vehicle);
+        parkingLot.unpark(vehicle);
 
+        verify(owner,never()).notifyParkingAvailable();
+    }
 }

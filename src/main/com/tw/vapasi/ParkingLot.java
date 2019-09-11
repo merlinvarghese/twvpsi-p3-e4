@@ -3,7 +3,6 @@ package com.tw.vapasi;
 import java.util.ArrayList;
 import java.util.List;
 
-//Understand
 public class ParkingLot {
 
     List<Vehicle> vehicles;
@@ -48,6 +47,10 @@ public class ParkingLot {
         return vehicles.size() == numberOfSlots;
     }
 
+    public boolean isSlotAvailable() {
+        return vehicles.size() < numberOfSlots;
+    }
+
     public boolean isVehicleUnParked(Vehicle vehicle) {
         return !vehicles.contains(vehicle);
     }
@@ -64,3 +67,4 @@ public class ParkingLot {
         return vehicles.contains(vehicle);
     }
 }
+//Understand
